@@ -1,10 +1,12 @@
 import cv2 as cv
 import numpy as np 
+from glob import glob
 from matplotlib import pyplot as plt 
 
-img = cv.imread("test_images/majin_kanon/IMG_5169.JPG", 0)
-cv.imwrite('greyscaled-pics/original_greyscale.jpg', img)
-hist, bins = np.histogram(img.flatten(), 256, [0, 256])
+
+# img = cv.imread("test_images/majin_kanon/IMG_5141.JPG", 0)
+# hist, bins = np.histogram(img.flatten(), 256, [0, 256])
+
 
 def histogram_plot(cdf):
     plt.plot(cdf, color = 'b')
@@ -13,28 +15,36 @@ def histogram_plot(cdf):
     plt.legend(('cdf', 'histogram'))
     plt.show()
 
-def histogram_equalisation(img):
+def histogram_equalisation(img, name):
     ####odredjivanje kumulativne verovatnoce piksela
     cdf_original = hist.cumsum()
     cdf_modified = cdf_original * hist.max() / cdf_original.max()
-    ###
 
-    ######
     cdf_modified2 = np.ma.masked_equal(cdf_original, 0)
     cdf_modified2 = (cdf_modified2 - cdf_modified2.min())*255/(cdf_modified2.max()-cdf_modified2.min())
     cdf_original = np.ma.filled(cdf_modified2, 0).astype('uint8')
     ######
 
     img2 = cdf_original[img]
-    cv.imwrite("greyscaled-pics/modified.jpg", img2)
-    cv.imshow("original", img)
-    cv.imshow("modified", img2)
-    cv.namedWindow("original", cv.WINDOW_NORMAL)
-    cv.namedWindow("modified", cv.WINDOW_NORMAL)
+    hist2 = cv.calcHist([img2],[0],None,[256],[0,256])
+    print(name)
+    cv.imwrite("greyscaled-pics/" + name, img2)
+
+    #cv.imshow("original", img)
+    #cv.imshow("modified", img2)
+
     histogram_plot(cdf_modified)
-    histogram_plot(cdf_modified2)
-    
-histogram_equalisation(img)
+    #histogram_plot(hist2)
+ 
+
+for fn in glob("test_images/majin_kanon/*"):
+    print(fn)
+    img = cv.imread(fn, 0)
+    hist, bins = np.histogram(img.flatten(), 256, [0, 256])
+    histogram_equalisation(img, fn.split("/")[-1])
+
+
+# histogram_equalisation(img)
 cv.waitKey()
 
 
