@@ -27,7 +27,7 @@ def histogram_equalisation(img, name):
 
     img2 = cdf_original[img]
     hist2 = cv.calcHist([img2],[0],None,[256],[0,256])
-    print(name)
+    #print(name)
     cv.imwrite("greyscaled-pics/" + name, img2)
 
     #cv.imshow("original", img)
