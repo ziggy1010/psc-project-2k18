@@ -7,7 +7,7 @@ cv.imwrite('greyscaled-pics/original_greyscale.jpg', img)
 hist, bins = np.histogram(img.flatten(), 256, [0, 256])
 
 ####odredjivanje kumulativne verovatnoce piksela
-cdf_original = hist.cumsum()
+"""cdf_original = hist.cumsum()
 cdf_modified = cdf_original * hist.max() / cdf_original.max()
 ###
 
@@ -17,7 +17,6 @@ cdf_modified2 = np.ma.masked_equal(cdf_original, 0)
 cdf_modified2 = (cdf_modified2 - cdf_modified2.min())*255/(cdf_modified2.max()-cdf_modified2.min())
 cdf_original = np.ma.filled(cdf_modified2, 0).astype('uint8')
 ######
-
 
 #first picture graph
 plt.plot(cdf_modified, color = 'b')
@@ -40,4 +39,38 @@ cv.namedWindow('original', cv.WINDOW_NORMAL)
 cv.namedWindow('modified', cv.WINDOW_NORMAL)
 
 cv.imwrite("greyscaled-pics/modified.jpg", img2)
+cv.waitKey()"""
+
+def histogram_equalisation(img):
+    ####odredjivanje kumulativne verovatnoce piksela
+    cdf_original = hist.cumsum()
+    cdf_modified = cdf_original * hist.max() / cdf_original.max()
+    ###
+
+    ######
+    cdf_modified2 = np.ma.masked_equal(cdf_original, 0)
+    cdf_modified2 = (cdf_modified2 - cdf_modified2.min())*255/(cdf_modified2.max()-cdf_modified2.min())
+    cdf_original = np.ma.filled(cdf_modified2, 0).astype('uint8')
+    ######
+
+    img2 = cdf_original[img]
+    cv.imshow("original", img)
+    cv.imshow("modified", img2)
+    histogram_plot(cdf_modified)
+    histogram_plot(cdf_modified2)
+    
+
+def histogram_plot(cdf):
+    plt.plot(cdf, color = 'b')
+    plt.hist(img.flatten(), 256, [0, 256], color = 'r')
+    plt.xlim([0, 256])
+    plt.legend(('cdf', 'histogram'))
+    plt.show()
+
+histogram_equalisation(img)
+#img2 = cdf_original[img]
+#cv.imshow("modified", img2)
+#cv.imshow("original", img)
+#cv.imwrite("greyscaled-pics/modified.jpg", img2)
+
 cv.waitKey()
