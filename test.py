@@ -18,7 +18,7 @@ plt.show()
 
 
 cdf_modified2 = np.ma.masked_equal(cdf_original, 0)
-cdf_modifed2 = (cdf_modified2 - cdf_modified2.min())*255/(cdf_modified2.max()-cdf_modified2.min())
+cdf_modified2 = (cdf_modified2 - cdf_modified2.min())*255/(cdf_modified2.max()-cdf_modified2.min())
 cdf_original = np.ma.filled(cdf_modified2, 0).astype('uint8')
 
 img2 = cdf_original[img]
