@@ -17,19 +17,22 @@ def histogram_equalisation(img, name):
     cdf_modified = cdf_original * hist.max() / cdf_original.max()
 
     cdf_modified2 = np.ma.masked_equal(cdf_original, 0)
-    cdf_modified2 = (cdf_modified2 - cdf_modified2.min())*255/(cdf_modified2.max()-cdf_modified2.min())
+    #print(cdf_modified2)
+    cdf_modified2 = ((cdf_modified2 - cdf_modified2.min())*255)/(cdf_modified2.max()-cdf_modified2.min())
+    #print(cdf_modified2)
     cdf_original = np.ma.filled(cdf_modified2, 0).astype('uint8')
+    #print(cdf_original)
     ######
 
     img2 = cdf_original[img]
     hist2 = cv.calcHist([img2],[0],None,[256],[0,256])
-    #print(name)
+
     cv.imwrite("greyscaled-pics/" + name, img2)
 
     #cv.imshow("original", img)
     #cv.imshow("modified", img2)
 
-    histogram_plot(cdf_modified)
+    # histogram_plot(cdf_modified)
     #histogram_plot(hist2)
  
 
