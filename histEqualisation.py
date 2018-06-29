@@ -25,17 +25,17 @@ def histogram_equalisation(img, name):
     ######
 
     img2 = cdf_original[img]
-    hist2 = cv.calcHist([img2],[0],None,[256],[0,256])
+    # hist2 = cv.calcHist([img2],[0],None,[256],[0,256])
 
     cv.imwrite("greyscaled-pics/" + name, img2)
-
+    return img2
     #cv.imshow("original", img)
     #cv.imshow("modified", img2)
 
-    # histogram_plot(cdf_modified)
+    #histogram_plot(cdf_modified)
     #histogram_plot(hist2)
- 
 
+#za svaku sliku u direktorijumu poziva funkciju hist-equ
 for fn in glob("test_images/majin_kanon/*"):
     print(fn)
     img = cv.imread(fn, 0)
