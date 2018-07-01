@@ -21,14 +21,11 @@ def histogram_equalisation(img, name):
     cdf_original = np.ma.filled(cdf_modified2, 0).astype('uint8')
 
     img2 = cdf_original[img]
+    hist_output = np.array(img2.flatten())
     cv.imwrite("greyscaled-pics/" + name, img2)
-    return img2
-    #cv.imshow("original", img)
-    #cv.imshow("modified", img2)
 
     #histogram_plot(cdf_modified)
-    #histogram_plot(hist2)
-
+    return img2
 #za svaku sliku u direktorijumu poziva funkciju hist-equ
 for fn in glob("test_images/majin_kanon/*"):
     print(fn)

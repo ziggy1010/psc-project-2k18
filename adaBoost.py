@@ -11,16 +11,15 @@ for fn in glob("test_images/majin_kanon/*"):
     img2 = histogram_equalisation(img, fn.split("/")[-1])
     hist_output = np.array(img2.flatten())
 
-
     weak = milk.supervised.tree.stump_learner()
     learner = milk.supervised.adaboost.boost_learner(weak)
     learner = milk.supervised.multi.one_against_one(learner)
 
     features = np.array(hist)
-    labels = np.asarray(hist_output)
+    labels = np.array(hist_output)
 
-    # print(hist)
-    # print(labels)
+    print(features)
+    print(labels)
 
     model = learner.train(features, labels)
     
