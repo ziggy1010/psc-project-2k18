@@ -3,6 +3,9 @@ import numpy as np
 from glob import glob
 from matplotlib import pyplot as plt 
 
+dir_in = input()
+dir_out = input()
+
 
 def histogram_plot(cdf):
     plt.plot(cdf, color = 'b')
@@ -22,12 +25,11 @@ def histogram_equalisation(img, name):
 
     img2 = cdf_original[img]
     hist_output = np.array(img2.flatten())
-    cv.imwrite("greyscaled-pics/" + name, img2)
-
-    #histogram_plot(cdf_modified)
+    cv.imwrite("greyscaled-pics/first_method/" + dir_out + "/"+ name, img2)
     return img2
+
 #za svaku sliku u direktorijumu poziva funkciju hist-equ
-for fn in glob("test_images/majin_kanon/*"):
+for fn in glob("test_images/"+ dir_in +"/*"):
     print(fn)
     img = cv.imread(fn, 0)
     hist, bins = np.histogram(img.flatten(), 256, [0, 256])
