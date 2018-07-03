@@ -5,6 +5,7 @@ import numpy as np
 
 dir_in = input()
 dir_out = input()
+
 def imgHist(img):
     hist = plt.hist(img.flatten(), 256, [0, 256], color='r')
     plt.xlim([0, 256])
