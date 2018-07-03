@@ -1,13 +1,10 @@
 import cv2 as cv; import numpy as np; from glob import glob; from matplotlib import pyplot as plt
 
-dir_in = input()
-dir_out = input()
-
 def linNormalization(img, name):
     img_arr = np.array(img)
     dst = np.zeros((4000, 3000))
     img_mod = cv.normalize(img_arr, dst, 0, 255, norm_type = cv.NORM_MINMAX , dtype= cv.CV_32F)
-    cv.imwrite("greyscaled-pics/third_method/" + dir_out + "/"+ name, img_mod)
+    cv.imwrite("greyscaled-pics/third_method/"+ name, img_mod)
     # linHistogram(img)
     # linHistogram(img_mod)
 
@@ -17,7 +14,7 @@ def linHistogram(img):
     plt.legend(('histogram')) 
     plt.show()
 
-for fn in glob("test_images/"+ dir_in +"/*"):
+for fn in glob("test_images/*"):
     print(fn)
     img = cv.imread(fn, 0)
     linNormalization(img, fn.split("/")[-1])
