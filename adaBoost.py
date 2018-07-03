@@ -2,6 +2,7 @@ import cv2 as cv; import numpy as np; from glob import glob
 from clahe import * 
 from histEqualisation import * 
 from linNormalization import * 
+import sys 
 
 clahe_adaboost = lambda x: clahe(x, "kurcic")
 he_adaboost = lambda x: histogram_equalisation(x, "kurcic2")
@@ -31,7 +32,8 @@ def calcError(weight1, weight2, weight3, f1, f2, f3): #error function
 
 def linCombination(img, f1, f2, f3): #linear combination of methods
     min_error = 10**9
-    for weight1 in frange(0, 10, 0.1):
+    res = (None, None, None)
+    for weight1 in frange(sys.argv[0], sys.argv[1], 0.1):
         for weight2 in frange(0, 10, 0.1):
             for weight3 in frange(0, 10, 0.1):
                 #lin_combination = weight1*img.flatten()+weight2*img.flatten()+weight3*img.flatten()
@@ -39,6 +41,8 @@ def linCombination(img, f1, f2, f3): #linear combination of methods
                 if error < min_error: 
                     min_error = error
                     print(min_error)
+                    res = (weight1, weight2, weight3)
+    print("Weights for this process: %f %f %f" % res)
 
 
 for fn in glob("greyscaled-pics/first_method/all_pics/*"):
