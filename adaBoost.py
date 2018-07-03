@@ -31,9 +31,11 @@ def calcError(weight1, weight2, weight3, f1, f2, f3): #error function
     return epsilon / img_num
 
 def linCombination(img, f1, f2, f3): #linear combination of methods
+    l = sys.argv[1] - sys.argv[0]
     min_error = 10**9
     res = (None, None, None)
     for weight1 in frange(sys.argv[0], sys.argv[1], 0.1):
+        sys.stdout.write("%f%%\r" % 100*(eight1 - sys.argv[0]) / l)
         for weight2 in frange(0, 10, 0.1):
             for weight3 in frange(0, 10, 0.1):
                 #lin_combination = weight1*img.flatten()+weight2*img.flatten()+weight3*img.flatten()
